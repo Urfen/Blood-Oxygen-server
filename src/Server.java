@@ -30,7 +30,9 @@ public class Server {
 
             out = new PrintWriter(socket.getOutputStream(),true);
 
+            String data = in.readLine();
 
+            System.out.println(data);
 
 
         }catch (IOException e){
