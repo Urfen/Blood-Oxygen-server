@@ -18,8 +18,8 @@ public class Server {
 
     private  static final int port = 8008;
 
-    public Server(){
-        try{
+    public Server() {
+        try {
             serverSocket = new ServerSocket(port);
 
             socket = serverSocket.accept();
@@ -28,16 +28,17 @@ public class Server {
 
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
-            out = new PrintWriter(socket.getOutputStream(),true);
+            out = new PrintWriter(socket.getOutputStream(), true);
 
             String data = in.readLine();
 
             System.out.println(data);
 
 
-        }catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
     }
+
 }
