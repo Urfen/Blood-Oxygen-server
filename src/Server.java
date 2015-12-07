@@ -36,7 +36,7 @@ public class Server {
 
             String[] split = data.split(";");
 
-            for (int i = 0; i < split.length-1; i++) {
+            for (int i = 0; i < split.length; i++) {
                 System.out.println(split[i]);
             }
 
