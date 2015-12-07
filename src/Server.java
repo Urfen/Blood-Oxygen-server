@@ -30,9 +30,15 @@ public class Server {
 
             out = new PrintWriter(socket.getOutputStream(), true);
 
+
             String data = in.readLine();
 
-            System.out.println(data);
+
+            String[] split = data.split(";");
+
+            for (int i = 0; i < split.length-1; i++) {
+                System.out.println(split[i]);
+            }
 
 
         } catch (IOException e) {
