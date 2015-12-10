@@ -4,6 +4,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketTimeoutException;
 
 /**
  * Created by Arvid Bodin och Mattias Grehnik on 2015-12-06.
@@ -19,32 +20,44 @@ public class Server {
     private  static final int port = 8008;
 
     public Server() {
-        try {
-            serverSocket = new ServerSocket(port);
+        while (true) {
+            try {
+                serverSocket = new ServerSocket(port);
 
-            socket = serverSocket.accept();
+                socket = serverSocket.accept();
 
-            System.out.println("Accepted" + serverSocket.getInetAddress());
+                System.out.println("Accepted" + serverSocket.getInetAddress());
 
-            in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
-            out = new PrintWriter(socket.getOutputStream(), true);
+                out = new PrintWriter(socket.getOutputStream(), true);
+
+                while (true) {
+                    socket.setSoTimeout(10000);
+                    String data = in.readLine();
 
 
-            String data = in.readLine();
+                    String[] split = data.split(";");
 
+                    for (int i = 0; i < split.length; i++) {
+                        System.out.println(split[i]);
+                    }
 
-            String[] split = data.split(";");
-
-            for (int i = 0; i < split.length; i++) {
-                System.out.println(split[i]);
+                }
+            } catch (SocketTimeoutException t) {
+                System.out.println("Client timeout");
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    socket.close();
+                    serverSocket.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
 
-
-        } catch (IOException e) {
-            e.printStackTrace();
         }
-
     }
 
 }
