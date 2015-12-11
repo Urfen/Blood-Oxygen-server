@@ -33,7 +33,7 @@ public class Server {
                 out = new PrintWriter(socket.getOutputStream(), true);
 
                 while (true) {
-                    socket.setSoTimeout(10000);
+                    socket.setSoTimeout(100);
                     String data = in.readLine();
 
 
